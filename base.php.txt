@@ -1,0 +1,19 @@
+<?php
+// Подключение к базе данных
+$mysqli = new mysqli("localhost", "username", "password", "database");
+
+if ($mysqli->connect_error) {
+    die("Ошибка подключения: " . $mysqli->connect_error);
+}
+
+// Получаем комментарий
+$comment = $_POST['comment'];
+
+// Сохраняем в базу данных
+$stmt = $mysqli->prepare("INSERT INTO comments (content) VALUES (?)");
+$stmt->bind_param("s", $comment);
+$stmt->execute();
+
+$stmt->close();
+$mysqli->close();
+?>
